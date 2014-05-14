@@ -11,3 +11,5 @@
 
 具体的效果可以看Demo。
 
+![YRSideViewControllerGif.gif](./YRSideViewControllerGif.gif "YRSideViewControllerGif.gif")
+
