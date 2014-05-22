@@ -12,3 +12,4 @@
 具体的效果可以看Demo。
 
 
+感谢[uxyheaven](https://github.com/uxyheaven/XYQuickDevelop)指出一个Bug，该Bug会导致横屏后滑动手势方向出错，目前已修复。
