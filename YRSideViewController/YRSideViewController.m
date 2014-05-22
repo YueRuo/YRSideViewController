@@ -49,7 +49,7 @@
     return self;
 }
 
--(id)init{
+- (id)init{
     return [self initWithNibName:nil bundle:nil];
 }
 
@@ -62,7 +62,7 @@
     self.needSwipeShowMenu = true;
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (!self.rootViewController) {
         NSAssert(false, @"you must set rootViewController!!");
@@ -76,7 +76,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)setRootViewController:(UIViewController *)rootViewController{
+- (void)setRootViewController:(UIViewController *)rootViewController{
     if (_rootViewController!=rootViewController) {
         _rootViewController=rootViewController;
         
@@ -88,7 +88,7 @@
 }
 
 
--(void)setNeedSwipeShowMenu:(BOOL)needSwipeShowMenu{
+- (void)setNeedSwipeShowMenu:(BOOL)needSwipeShowMenu{
     _needSwipeShowMenu = needSwipeShowMenu;
     if (needSwipeShowMenu) {
         [self.view addGestureRecognizer:_panGestureRecognizer];
@@ -106,7 +106,7 @@
     }
 }
 #pragma mark  ShowOrHideTheView
--(void)willShowLeftViewController{
+- (void)willShowLeftViewController{
     if (!_leftViewController || _leftViewController.view.superview) {
         return;
     }
@@ -117,7 +117,7 @@
         [_rightViewController viewDidDisappear:false];
     }
 }
--(void)willShowRightViewController{
+- (void)willShowRightViewController{
     if (!_rightViewController || _rightViewController.view.superview) {
         return;
     }
@@ -128,14 +128,14 @@
         [_leftViewController viewDidDisappear:false];
     }
 }
--(void)showLeftViewController:(BOOL)animated{
+- (void)showLeftViewController:(BOOL)animated{
     if (!_leftViewController) {
         return;
     }
     [self willShowLeftViewController];
     NSTimeInterval animatedTime=0;
     if (animated) {
-        animatedTime = ABS(_leftViewShowWidth-_currentView.frame.origin.x)/_leftViewShowWidth*_animationDuration;
+        animatedTime = ABS(_leftViewShowWidth - _currentView.frame.origin.x) / _leftViewShowWidth * _animationDuration;
     }
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView animateWithDuration:animatedTime animations:^{
@@ -144,14 +144,14 @@
         [self showShadow:_showBoundsShadow];
     }];
 }
--(void)showRightViewController:(BOOL)animated{
+- (void)showRightViewController:(BOOL)animated{
     if (!_rightViewController) {
         return;
     }
     [self willShowRightViewController];
     NSTimeInterval animatedTime = 0;
     if (animated) {
-        animatedTime = ABS(_rightViewShowWidth+_currentView.frame.origin.x)/_rightViewShowWidth*_animationDuration;
+        animatedTime = ABS(_rightViewShowWidth + _currentView.frame.origin.x) / _rightViewShowWidth * _animationDuration;
     }
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView animateWithDuration:animatedTime animations:^{
@@ -160,11 +160,11 @@
         [self showShadow:_showBoundsShadow];
     }];
 }
--(void)hideSideViewController:(BOOL)animated{
+- (void)hideSideViewController:(BOOL)animated{
     [self showShadow:false];
     NSTimeInterval animatedTime = 0;
     if (animated) {
-        animatedTime = ABS(_currentView.frame.origin.x/(_currentView.frame.origin.x>0?_leftViewShowWidth:_rightViewShowWidth))*_animationDuration;
+        animatedTime = ABS(_currentView.frame.origin.x / (_currentView.frame.origin.x>0?_leftViewShowWidth:_rightViewShowWidth)) * _animationDuration;
     }
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView animateWithDuration:animatedTime animations:^{
@@ -175,7 +175,7 @@
         [_rightViewController.view removeFromSuperview];
     }];
 }
--(void)hideSideViewController{
+- (void)hideSideViewController{
     [self hideSideViewController:true];
 }
 
@@ -192,7 +192,7 @@
     }
     return YES;
 }
--(void)pan:(UIPanGestureRecognizer*)pan{
+- (void)pan:(UIPanGestureRecognizer*)pan{
     if (_panGestureRecognizer.state==UIGestureRecognizerStateBegan) {
         _startPanPoint=_currentView.frame.origin;
         if (_currentView.frame.origin.x==0) {
@@ -211,12 +211,12 @@
         return;
     }
     CGPoint currentPostion = [pan translationInView:self.view];
-    CGFloat xoffset = _startPanPoint.x+currentPostion.x;
+    CGFloat xoffset = _startPanPoint.x + currentPostion.x;
     if (xoffset>0) {//向右滑
         if (_leftViewController && _leftViewController.view.superview) {
             xoffset = xoffset>_leftViewShowWidth?_leftViewShowWidth:xoffset;
         }else{
-            xoffset=0;
+            xoffset = 0;
         }
     }else if(xoffset<0){//向左滑
         if (_rightViewController && _rightViewController.view.superview) {
@@ -252,7 +252,7 @@
 }
 
 //重写此方法可以改变动画效果,PS._currentView就是RootViewController.view
--(void)layoutCurrentViewWithOffset:(CGFloat)xoffset{
+- (void)layoutCurrentViewWithOffset:(CGFloat)xoffset{
     if (_showBoundsShadow) {
         _currentView.layer.shadowPath = [UIBezierPath bezierPathWithRect:_currentView.bounds].CGPath;
     }
@@ -266,17 +266,17 @@
     //*/
     
 //    /*平移带缩放效果的动画
-    static CGFloat h2w=0;
+    static CGFloat h2w = 0;
     if (h2w==0) {
-        h2w=_baseView.frame.size.height/_baseView.frame.size.width;
+        h2w = _baseView.frame.size.height/_baseView.frame.size.width;
     }
-    CGFloat scale = ABS(600-ABS(xoffset))/600;
+    CGFloat scale = ABS(600 - ABS(xoffset)) / 600;
     scale = MAX(0.8, scale);
     _currentView.transform = CGAffineTransformMakeScale(scale, scale);
     if (xoffset>0) {//向右滑的
-        [_currentView setFrame:CGRectMake(xoffset, _baseView.frame.origin.y+(_baseView.frame.size.height*(1-scale)/2), _baseView.frame.size.width*scale, _baseView.frame.size.height*scale)];
+        [_currentView setFrame:CGRectMake(xoffset, _baseView.frame.origin.y + (_baseView.frame.size.height * (1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
     }else{//向左滑的
-        [_currentView setFrame:CGRectMake(_baseView.frame.size.width*(1-scale)+xoffset, _baseView.frame.origin.y+(_baseView.frame.size.height*(1-scale)/2), _baseView.frame.size.width*scale, _baseView.frame.size.height*scale)];
+        [_currentView setFrame:CGRectMake(_baseView.frame.size.width * (1 - scale) + xoffset, _baseView.frame.origin.y + (_baseView.frame.size.height*(1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
     }
      //*/
 }

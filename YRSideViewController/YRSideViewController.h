@@ -28,10 +28,10 @@ typedef void(^RootViewMoveBlock)(UIView *rootView,CGRect orginFrame,CGFloat xoff
 @property (assign,nonatomic) BOOL showBoundsShadow;//是否显示边框阴影
 
 @property (copy,nonatomic) RootViewMoveBlock rootViewMoveBlock;//可在此block中重做动画效果
--(void)setRootViewMoveBlock:(RootViewMoveBlock)rootViewMoveBlock;
+- (void)setRootViewMoveBlock:(RootViewMoveBlock)rootViewMoveBlock;
 
--(void)showLeftViewController:(BOOL)animated;//展示左边栏
--(void)showRightViewController:(BOOL)animated;//展示右边栏
--(void)hideSideViewController:(BOOL)animated;//恢复正常位置
+- (void)showLeftViewController:(BOOL)animated;//展示左边栏
+- (void)showRightViewController:(BOOL)animated;//展示右边栏
+- (void)hideSideViewController:(BOOL)animated;//恢复正常位置
 
 @end
