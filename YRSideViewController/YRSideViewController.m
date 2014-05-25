@@ -82,10 +82,9 @@
         
         [_currentView removeFromSuperview];
         _currentView=_rootViewController.view;
-        _currentView.frame=_baseView.bounds;
         [self.view addSubview:_currentView];
+        _currentView.frame=_baseView.bounds;
     }
-
 }
 
 
