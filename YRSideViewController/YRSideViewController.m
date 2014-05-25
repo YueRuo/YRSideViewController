@@ -110,6 +110,7 @@
     if (!_leftViewController || _leftViewController.view.superview) {
         return;
     }
+    _leftViewController.view.frame=_baseView.bounds;
     [_baseView insertSubview:_leftViewController.view belowSubview:_currentView];
     if (_rightViewController && _rightViewController.view.superview) {
         [_rightViewController viewWillDisappear:false];
@@ -121,6 +122,7 @@
     if (!_rightViewController || _rightViewController.view.superview) {
         return;
     }
+    _rightViewController.view.frame=_baseView.bounds;
     [_baseView insertSubview:_rightViewController.view belowSubview:_currentView];
     if (_leftViewController && _leftViewController.view.superview) {
         [_leftViewController viewWillDisappear:false];
@@ -261,7 +263,7 @@
         return;
     }
     /*平移的动画
-     [_currentView setFrame:CGRectMake(xoffset, _baseView.frame.origin.y, _baseView.frame.size.width, _baseView.frame.size.height)];
+     [_currentView setFrame:CGRectMake(xoffset, _baseView.bounds.origin.y, _baseView.frame.size.width, _baseView.frame.size.height)];
     return;
     //*/
     
@@ -274,9 +276,9 @@
     scale = MAX(0.8, scale);
     _currentView.transform = CGAffineTransformMakeScale(scale, scale);
     if (xoffset>0) {//向右滑的
-        [_currentView setFrame:CGRectMake(xoffset, _baseView.frame.origin.y + (_baseView.frame.size.height * (1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
+        [_currentView setFrame:CGRectMake(xoffset, _baseView.bounds.origin.y + (_baseView.frame.size.height * (1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
     }else{//向左滑的
-        [_currentView setFrame:CGRectMake(_baseView.frame.size.width * (1 - scale) + xoffset, _baseView.frame.origin.y + (_baseView.frame.size.height*(1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
+        [_currentView setFrame:CGRectMake(_baseView.frame.size.width * (1 - scale) + xoffset, _baseView.bounds.origin.y + (_baseView.frame.size.height*(1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
     }
      //*/
 }
