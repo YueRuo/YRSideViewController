@@ -86,6 +86,28 @@
         _currentView.frame=_baseView.bounds;
     }
 }
+-(void)setLeftViewController:(UIViewController *)leftViewController{
+    if (_leftViewController!=leftViewController) {
+        if (_leftViewController) {
+            [_leftViewController removeFromParentViewController];
+        }
+        _leftViewController=leftViewController;
+        if (_leftViewController) {
+            [self addChildViewController:_leftViewController];
+        }
+    }
+}
+-(void)setRightViewController:(UIViewController *)rightViewController{
+    if (_rightViewController!=rightViewController) {
+        if (_rightViewController) {
+            [_rightViewController removeFromParentViewController];
+        }
+        _rightViewController=rightViewController;
+        if (_rightViewController) {
+            [self addChildViewController:_rightViewController];
+        }
+    }
+}
 
 
 - (void)setNeedSwipeShowMenu:(BOOL)needSwipeShowMenu{
@@ -113,9 +135,7 @@
     _leftViewController.view.frame=_baseView.bounds;
     [_baseView insertSubview:_leftViewController.view belowSubview:_currentView];
     if (_rightViewController && _rightViewController.view.superview) {
-        [_rightViewController viewWillDisappear:false];
         [_rightViewController.view removeFromSuperview];
-        [_rightViewController viewDidDisappear:false];
     }
 }
 - (void)willShowRightViewController{
@@ -125,9 +145,7 @@
     _rightViewController.view.frame=_baseView.bounds;
     [_baseView insertSubview:_rightViewController.view belowSubview:_currentView];
     if (_leftViewController && _leftViewController.view.superview) {
-        [_leftViewController viewWillDisappear:false];
         [_leftViewController.view removeFromSuperview];
-        [_leftViewController viewDidDisappear:false];
     }
 }
 - (void)showLeftViewController:(BOOL)animated{

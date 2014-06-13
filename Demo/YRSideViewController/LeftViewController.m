@@ -62,5 +62,13 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+//-(BOOL)shouldAutorotate{
+//    return true;
+//}
+//-(NSUInteger)supportedInterfaceOrientations{
+//    return UIInterfaceOrientationMaskAll;
+//}
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    NSLog(@"rote");
+}
 @end
