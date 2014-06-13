@@ -69,6 +69,6 @@
 //    return UIInterfaceOrientationMaskAll;
 //}
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    NSLog(@"rote");
+    NSLog(@"left view rotate");
 }
 @end

@@ -306,7 +306,6 @@
         totalHeight=_baseView.frame.size.width;
         totalWidth=_baseView.frame.size.height;
     }
-
     
     if (xoffset>0) {//向右滑的
         [_currentView setFrame:CGRectMake(xoffset, _baseView.bounds.origin.y + (totalHeight * (1 - scale) / 2), totalWidth * scale, totalHeight * scale)];
@@ -314,7 +313,6 @@
         [_currentView setFrame:CGRectMake(_baseView.frame.size.width * (1 - scale) + xoffset, _baseView.bounds.origin.y + (totalHeight*(1 - scale) / 2), totalWidth * scale, totalHeight * scale)];
     }
     //*/
-    NSLog(@"-011->>%@",NSStringFromCGRect(_baseView.frame));
 }
 
 @end
