@@ -70,4 +70,8 @@
     YRSideViewController *sideViewController=[delegate sideViewController];
     [sideViewController showRightViewController:true];
 }
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    NSLog(@"root view rotate");
+}
 @end

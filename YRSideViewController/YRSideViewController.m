@@ -11,7 +11,7 @@
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
 @interface YRSideViewController ()<UIGestureRecognizerDelegate>{
-    UIView *_baseView;//目前是self.view
+    UIView *_baseView;//目前是_baseView
     UIView *_currentView;//其实就是rootViewController.view
     
     UIPanGestureRecognizer *_panGestureRecognizer;
@@ -67,7 +67,12 @@
     if (!self.rootViewController) {
         NSAssert(false, @"you must set rootViewController!!");
     }
-
+    if (_currentView!=_rootViewController.view) {
+        [_currentView removeFromSuperview];
+        _currentView=_rootViewController.view;
+        [_baseView addSubview:_currentView];
+        _currentView.frame=_baseView.bounds;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,12 +83,13 @@
 
 - (void)setRootViewController:(UIViewController *)rootViewController{
     if (_rootViewController!=rootViewController) {
+        if (_rootViewController) {
+            [_rootViewController removeFromParentViewController];
+        }
         _rootViewController=rootViewController;
-        
-        [_currentView removeFromSuperview];
-        _currentView=_rootViewController.view;
-        [self.view addSubview:_currentView];
-        _currentView.frame=_baseView.bounds;
+        if (_rootViewController) {
+            [self addChildViewController:_rootViewController];
+        }
     }
 }
 -(void)setLeftViewController:(UIViewController *)leftViewController{
@@ -113,9 +119,9 @@
 - (void)setNeedSwipeShowMenu:(BOOL)needSwipeShowMenu{
     _needSwipeShowMenu = needSwipeShowMenu;
     if (needSwipeShowMenu) {
-        [self.view addGestureRecognizer:_panGestureRecognizer];
+        [_baseView addGestureRecognizer:_panGestureRecognizer];
     }else{
-        [self.view removeGestureRecognizer:_panGestureRecognizer];
+        [_baseView removeGestureRecognizer:_panGestureRecognizer];
     }
 }
 - (void)showShadow:(BOOL)show{
@@ -204,8 +210,8 @@
     // Check for horizontal pan gesture
     if (gestureRecognizer == _panGestureRecognizer) {
         UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer*)gestureRecognizer;
-        CGPoint translation = [panGesture translationInView:self.view];
-        if ([panGesture velocityInView:self.view].x < 600 && ABS(translation.x)/ABS(translation.y)>1) {
+        CGPoint translation = [panGesture translationInView:_baseView];
+        if ([panGesture velocityInView:_baseView].x < 600 && ABS(translation.x)/ABS(translation.y)>1) {
             return YES;
         }
         return NO;
@@ -218,7 +224,7 @@
         if (_currentView.frame.origin.x==0) {
             [self showShadow:_showBoundsShadow];
         }
-        CGPoint velocity=[pan velocityInView:self.view];
+        CGPoint velocity=[pan velocityInView:_baseView];
         if(velocity.x>0){
             if (_currentView.frame.origin.x>=0 && _leftViewController && !_leftViewController.view.superview) {
                 [self willShowLeftViewController];
@@ -230,7 +236,7 @@
         }
         return;
     }
-    CGPoint currentPostion = [pan translationInView:self.view];
+    CGPoint currentPostion = [pan translationInView:_baseView];
     CGFloat xoffset = _startPanPoint.x + currentPostion.x;
     if (xoffset>0) {//向右滑
         if (_leftViewController && _leftViewController.view.superview) {
@@ -262,7 +268,7 @@
         }
         _lastPanPoint = CGPointZero;
     }else{
-        CGPoint velocity = [pan velocityInView:self.view];
+        CGPoint velocity = [pan velocityInView:_baseView];
         if (velocity.x>0) {
             _panMovingRightOrLeft = true;
         }else if(velocity.x<0){
@@ -293,12 +299,22 @@
     CGFloat scale = ABS(600 - ABS(xoffset)) / 600;
     scale = MAX(0.8, scale);
     _currentView.transform = CGAffineTransformMakeScale(scale, scale);
-    if (xoffset>0) {//向右滑的
-        [_currentView setFrame:CGRectMake(xoffset, _baseView.bounds.origin.y + (_baseView.frame.size.height * (1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
-    }else{//向左滑的
-        [_currentView setFrame:CGRectMake(_baseView.frame.size.width * (1 - scale) + xoffset, _baseView.bounds.origin.y + (_baseView.frame.size.height*(1 - scale) / 2), _baseView.frame.size.width * scale, _baseView.frame.size.height * scale)];
+    
+    CGFloat totalWidth=_baseView.frame.size.width;
+    CGFloat totalHeight=_baseView.frame.size.height;
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        totalHeight=_baseView.frame.size.width;
+        totalWidth=_baseView.frame.size.height;
     }
-     //*/
+
+    
+    if (xoffset>0) {//向右滑的
+        [_currentView setFrame:CGRectMake(xoffset, _baseView.bounds.origin.y + (totalHeight * (1 - scale) / 2), totalWidth * scale, totalHeight * scale)];
+    }else{//向左滑的
+        [_currentView setFrame:CGRectMake(_baseView.frame.size.width * (1 - scale) + xoffset, _baseView.bounds.origin.y + (totalHeight*(1 - scale) / 2), totalWidth * scale, totalHeight * scale)];
+    }
+    //*/
+    NSLog(@"-011->>%@",NSStringFromCGRect(_baseView.frame));
 }
 
 @end
