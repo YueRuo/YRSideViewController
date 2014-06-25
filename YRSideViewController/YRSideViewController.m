@@ -255,7 +255,9 @@
         [self layoutCurrentViewWithOffset:xoffset];
     }
     if (_panGestureRecognizer.state==UIGestureRecognizerStateEnded) {
-        if (_currentView.frame.origin.x!=0 && _currentView.frame.origin.x!=_leftViewShowWidth && _currentView.frame.origin.x!=-_rightViewShowWidth) {
+        if (_currentView.frame.origin.x==0) {
+            [self showShadow:false];
+        }else{
             if (_panMovingRightOrLeft && _currentView.frame.origin.x>20) {
                 [self showLeftViewController:true];
             }else if(!_panMovingRightOrLeft && _currentView.frame.origin.x<-20){
@@ -263,8 +265,6 @@
             }else{
                 [self hideSideViewController];
             }
-        }else if (_currentView.frame.origin.x==0) {
-            [self showShadow:false];
         }
         _lastPanPoint = CGPointZero;
     }else{
