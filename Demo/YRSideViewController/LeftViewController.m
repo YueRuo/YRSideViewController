@@ -7,6 +7,8 @@
 //
 
 #import "LeftViewController.h"
+#import "AppDelegate.h"
+#import "RootViewController.h"
 
 @interface LeftViewController ()
 
@@ -27,6 +29,11 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    UIButton *button=[[UIButton alloc]initWithFrame:CGRectMake(20, 80, 200, 60)];
+    [button addTarget:self action:@selector(changeRootViewAction) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:@"changeRootVCButton" forState:UIControlStateNormal];
+    [self.view addSubview:button];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -71,4 +78,13 @@
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     NSLog(@"left view rotate");
 }
+
+-(void)changeRootViewAction{
+    YRSideViewController *sideViewController=[((AppDelegate*)[[UIApplication sharedApplication]delegate])sideViewController];
+    RootViewController *vc=[[RootViewController alloc]initWithNibName:nil bundle:nil];
+    CGFloat randomR=arc4random()%255/255.0f;
+    [vc.view setBackgroundColor:[UIColor colorWithRed:randomR green:0.8 blue:0.8 alpha:1]];
+    [sideViewController setRootViewController:vc];
+}
+
 @end

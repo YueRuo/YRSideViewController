@@ -21,6 +21,8 @@
     BOOL _panMovingRightOrLeft;//true是向右，false是向左
     
     UIButton *_coverButton;
+    
+    BOOL _isInit;//是否是初始化
 }
 @end
 
@@ -45,6 +47,8 @@
 
         _coverButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         [_coverButton addTarget:self action:@selector(hideSideViewController) forControlEvents:UIControlEventTouchUpInside];
+        
+        _isInit = true;
     }
     return self;
 }
@@ -67,11 +71,9 @@
     if (!self.rootViewController) {
         NSAssert(false, @"you must set rootViewController!!");
     }
-    if (_currentView!=_rootViewController.view) {
-        [_currentView removeFromSuperview];
-        _currentView=_rootViewController.view;
-        [_baseView addSubview:_currentView];
-        _currentView.frame=_baseView.bounds;
+    if (_isInit) {
+        [self resetCurrentViewToRootViewController];
+        _isInit=false;
     }
 }
 
@@ -89,7 +91,11 @@
         _rootViewController=rootViewController;
         if (_rootViewController) {
             [self addChildViewController:_rootViewController];
+        }        
+        if (!_isInit) {
+            [self resetCurrentViewToRootViewController];
         }
+
     }
 }
 -(void)setLeftViewController:(UIViewController *)leftViewController{
@@ -133,6 +139,30 @@
         _currentView.layer.shadowPath   = [UIBezierPath bezierPathWithRect:_currentView.bounds].CGPath;
     }
 }
+-(void)resetCurrentViewToRootViewController{
+    if (_currentView!=_rootViewController.view) {
+        CGRect frame = CGRectZero;
+        CGAffineTransform transform = CGAffineTransformIdentity;
+        if (!_currentView) {
+            frame = _baseView.bounds;
+        }else{
+            frame=_currentView.frame;
+            transform = _currentView.transform;
+        }
+
+        [_currentView removeFromSuperview];
+        _currentView = _rootViewController.view;
+        [_baseView addSubview:_currentView];
+        _currentView.transform=transform;
+        _currentView.frame = frame;
+        if (_leftViewController.view.superview||_rightViewController.view.superview) {
+            [_currentView addSubview:_coverButton];
+            [self showShadow:_showBoundsShadow];
+        }
+
+    }
+}
+
 #pragma mark  ShowOrHideTheView
 - (void)willShowLeftViewController{
     if (!_leftViewController || _leftViewController.view.superview) {
