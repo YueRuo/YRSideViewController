@@ -16,3 +16,7 @@
 1.0.0  修正了iOS7以下版本中，各view的顶部栏多空出20像素的问题
 
 另：感谢[uxyheaven](https://github.com/uxyheaven/XYQuickDevelop)指出一个Bug，该Bug会导致横屏后滑动手势方向出错，目前已修复。
+<br><br>
+
+
+![YRSideViewController](YRSideViewController动画图.gif)
