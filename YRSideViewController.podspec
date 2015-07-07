@@ -16,13 +16,11 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YRSideViewController"
-  s.version      = "1.0.2"
-  s.summary      = "a light weight and easy to add border for view."
+  s.version      = "1.0.4"
+  s.summary      = "a easy side view controller."
 
-  s.description  = <<-DESC
-                   a light weight and easy to add border for view.
-                   set each line width,color,corner radius,dash..
-                   DESC
+#  s.description  = <<-DESC
+#                  DESC
 
   s.homepage     = "https://github.com/YueRuo/YRSideViewController"
 #s.screenshots  = ""
