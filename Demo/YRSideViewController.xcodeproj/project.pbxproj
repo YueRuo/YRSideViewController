@@ -23,6 +23,7 @@
 		5FB361CC191E6D950037017F /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB361CA191E6D950037017F /* RootViewController.m */; };
 		5FB361CD191E6D950037017F /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FB361CB191E6D950037017F /* RootViewController.xib */; };
 		5FB361D0191E78540037017F /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB361CF191E78540037017F /* LeftViewController.m */; };
+		AAD3E9A21C201BA900EB7D02 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAD3E9A11C201BA900EB7D02 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		5FB361CB191E6D950037017F /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		5FB361CE191E78540037017F /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
 		5FB361CF191E78540037017F /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
+		AAD3E9A11C201BA900EB7D02 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				5FB361CB191E6D950037017F /* RootViewController.xib */,
 				5FB361CE191E78540037017F /* LeftViewController.h */,
 				5FB361CF191E78540037017F /* LeftViewController.m */,
+				AAD3E9A11C201BA900EB7D02 /* Launch Screen.storyboard */,
 			);
 			path = YRSideViewController;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 			files = (
 				5FB2668A191E308500D62141 /* InfoPlist.strings in Resources */,
 				5FB26692191E308500D62141 /* Images.xcassets in Resources */,
+				AAD3E9A21C201BA900EB7D02 /* Launch Screen.storyboard in Resources */,
 				5FB361CD191E6D950037017F /* RootViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
