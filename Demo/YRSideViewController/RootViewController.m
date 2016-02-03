@@ -78,5 +78,7 @@
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
-
+-(BOOL)prefersStatusBarHidden{
+    return false;
+}
 @end
