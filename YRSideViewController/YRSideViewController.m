@@ -57,11 +57,10 @@
     return [self initWithNibName:nil bundle:nil];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _baseView              = self.view;
+    _baseView = self.view;
     [_baseView setBackgroundColor:[UIColor colorWithRed:0.5 green:0.6 blue:0.8 alpha:1]];
     self.needSwipeShowMenu = true;
 }
@@ -77,12 +76,43 @@
     }
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark rotation
+- (BOOL)shouldAutorotate{
+    return self.rootViewController.shouldAutorotate;
+}
+
+- (BOOL)prefersStatusBarHidden{
+    return self.rootViewController.prefersStatusBarHidden;
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
+    return self.rootViewController.supportedInterfaceOrientations;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return self.rootViewController.preferredStatusBarStyle;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)!=UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        [UIView animateWithDuration:duration animations:^{
+            _currentView.frame = CGRectMake(0, 0, _baseView.frame.size.height, _baseView.frame.size.width);
+            _currentView.layer.shadowPath = nil;
+            [self hideSideViewController];
+            [self setNeedsStatusBarAppearanceUpdate];
+        }];
+    }
+}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
+    [self layoutCurrentViewWithOffset:0];
+}
+
+#pragma mark set
 - (void)setRootViewController:(UIViewController *)rootViewController{
     if (_rootViewController!=rootViewController) {
         if (_rootViewController) {
@@ -95,7 +125,7 @@
         if (!_isInit) {
             [self resetCurrentViewToRootViewController];
         }
-
+        [self setNeedsStatusBarAppearanceUpdate];
     }
 }
 -(void)setLeftViewController:(UIViewController *)leftViewController{
@@ -334,10 +364,10 @@
     
     CGFloat totalWidth=_baseView.frame.size.width;
     CGFloat totalHeight=_baseView.frame.size.height;
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
-        totalHeight=_baseView.frame.size.width;
-        totalWidth=_baseView.frame.size.height;
-    }
+//    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+//        totalHeight=_baseView.frame.size.width;
+//        totalWidth=_baseView.frame.size.height;
+//    }
     
     if (xoffset>0) {//向右滑的
         [_currentView setFrame:CGRectMake(xoffset, _baseView.bounds.origin.y + (totalHeight * (1 - scale) / 2), totalWidth * scale, totalHeight * scale)];

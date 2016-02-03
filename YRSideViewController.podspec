@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "YRSideViewController"
-  s.version      = "1.0.4"
+  s.version      = "1.0.6"
   s.summary      = "a easy side view controller."
 
 #  s.description  = <<-DESC
