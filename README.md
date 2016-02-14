@@ -1,6 +1,6 @@
 ###Introduction
 
-支持Cocoapods安装
+支持CocoaPods安装
 
 	   pod 'YRSideViewController', '~> 1.0'
 	   
