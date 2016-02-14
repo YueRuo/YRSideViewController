@@ -268,16 +268,16 @@
 #pragma mark UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     // Check for horizontal pan gesture
-    if (gestureRecognizer == _panGestureRecognizer) {
-        UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer*)gestureRecognizer;
-        CGPoint translation = [panGesture translationInView:_baseView];
-        if ([panGesture velocityInView:_baseView].x < 600 && ABS(translation.x)/ABS(translation.y)>1) {
-            if((translation.x>0&&_leftViewController)||(translation.x<0&&_rightViewController)){
-                return YES;
-            }
-        }
-        return NO;
-    }
+    //if (gestureRecognizer == _panGestureRecognizer) {
+    //    UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer*)gestureRecognizer;
+    //    CGPoint translation = [panGesture translationInView:_baseView];
+    //    if ([panGesture velocityInView:_baseView].x < 600 && ABS(translation.x)/ABS(translation.y)>1) {
+    //        if((translation.x>0&&_leftViewController)||(translation.x<0&&_rightViewController)){
+    //            return YES;
+    //        }
+    //    }
+    //    return NO;
+    //}
     return YES;
 }
 - (void)pan:(UIPanGestureRecognizer*)pan{
